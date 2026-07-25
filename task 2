@@ -1,0 +1,32 @@
+import java.util.*;
+import java.util.stream.*;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        List<String[]> readings = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            String id = sc.next();
+            String temp = sc.next();
+            readings.add(new String[]{id, temp});
+        }
+
+        Map<String, Double> avgTemp = readings.stream()
+                .filter(r -> Integer.parseInt(r[1]) > 50)
+                .collect(Collectors.groupingBy(
+                        r -> r[0],
+                        Collectors.averagingDouble(r -> Double.parseDouble(r[1]))
+                ));
+
+        avgTemp.entrySet().stream()
+                .sorted((a, b) -> Double.compare(b.getValue(), a.getValue()))
+                .forEach(e -> System.out.println(e.getKey() + " " + e.getValue()));
+
+        sc.close();
+    }
+}
