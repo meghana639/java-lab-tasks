@@ -1,0 +1,33 @@
+import java.util.*;
+
+public class sum {
+
+    public static void main(String[] args) {
+
+        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+
+        ArrayList<Integer> row1 = new ArrayList<>();
+        row1.add(41);
+        row1.add(77);
+        row1.add(74);
+        row1.add(22);
+        row1.add(44);
+
+        ArrayList<Integer> row2 = new ArrayList<>();
+        row2.add(12);
+
+        ArrayList<Integer> row3 = new ArrayList<>();
+        row3.add(37);
+        row3.add(34);
+        row3.add(36);
+        row3.add(52);
+
+        list.add(row1);
+        list.add(row2);
+        list.add(row3);
+
+        System.out.println(list);
+
+        System.out.println(list.get(0).get(2));
+    }
+}
