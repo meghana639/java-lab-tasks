@@ -1,0 +1,76 @@
+import java.util.*;
+
+class Person {
+    String name;
+    ArrayList<Person> children;
+
+    Person(String name) {
+        this.name = name;
+        this.children = new ArrayList<>();
+    }
+}
+
+class ThroneInheritance {
+    private Person king;
+    private HashMap<String, Person> people;
+    private HashSet<String> dead;
+
+    ThroneInheritance(String kingName) {
+        king = new Person(kingName);
+
+        people = new HashMap<>();
+        people.put(kingName, king);
+
+        dead = new HashSet<>();
+    }
+
+    void birth(String parentName, String childName) {
+        Person child = new Person(childName);
+
+        people.get(parentName).children.add(child);
+        people.put(childName, child);
+    }
+
+    void death(String name) {
+        dead.add(name);
+    }
+
+    List<String> getInheritanceOrder() {
+        ArrayList<String> order = new ArrayList<>();
+        findOrder(king, order);
+        return order;
+    }
+
+    private void findOrder(
+            Person person, ArrayList<String> order) {
+
+        if (!dead.contains(person.name)) {
+            order.add(person.name);
+        }
+
+        for (Person child : person.children) {
+            findOrder(child, order);
+        }
+    }
+}
+
+public class task {
+
+    public static void main(String[] args) {
+        ThroneInheritance throne =
+                new ThroneInheritance("king");
+
+        throne.birth("king", "andy");
+        throne.birth("king", "bob");
+        throne.birth("king", "catherine");
+        throne.birth("andy", "matthew");
+        throne.birth("bob", "alex");
+        throne.birth("bob", "asha");
+
+        System.out.println(throne.getInheritanceOrder());
+
+        throne.death("bob");
+
+        System.out.println(throne.getInheritanceOrder());
+    }
+}
