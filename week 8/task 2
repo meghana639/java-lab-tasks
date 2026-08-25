@@ -1,0 +1,33 @@
+class Cycle {
+
+    String defineMe() {
+        return "a vehicle with pedals.";
+    }
+}
+
+class Motorcycle extends Cycle {
+
+    @Override
+    String defineMe() {
+        return "a cycle with an engine.";
+    }
+
+    Motorcycle() {
+        System.out.println(
+                "Hello I am a motorcycle, I am "
+                        + defineMe()
+        );
+
+        System.out.println(
+                "My ancestor is a cycle who is "
+                        + super.defineMe()
+        );
+    }
+}
+
+public class task {
+
+    public static void main(String[] args) {
+        new Motorcycle();
+    }
+}
