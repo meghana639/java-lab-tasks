@@ -1,0 +1,43 @@
+import java.util.*;
+
+public class task {
+
+    static void printAfterMarker(ArrayList<Object> list) {
+        Iterator<Object> iterator = list.iterator();
+
+        while (iterator.hasNext()) {
+            Object element = iterator.next();
+
+            if (element instanceof String
+                    && element.equals("###")) {
+                break;
+            }
+        }
+
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Object> list = new ArrayList<>();
+
+        int numberOfIntegers = sc.nextInt();
+
+        for (int i = 0; i < numberOfIntegers; i++) {
+            list.add(sc.nextInt());
+        }
+
+        list.add("###");
+
+        int numberOfStrings = sc.nextInt();
+
+        for (int i = 0; i < numberOfStrings; i++) {
+            list.add(sc.next());
+        }
+
+        printAfterMarker(list);
+        sc.close();
+    }
+}
