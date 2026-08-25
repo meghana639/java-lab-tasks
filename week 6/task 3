@@ -1,0 +1,35 @@
+import java.util.*;
+
+public class task {
+
+    static String twoStrings(String first, String second) {
+        boolean[] present = new boolean[26];
+
+        for (int i = 0; i < first.length(); i++) {
+            present[first.charAt(i) - 'a'] = true;
+        }
+
+        for (int i = 0; i < second.length(); i++) {
+            if (present[second.charAt(i) - 'a']) {
+                return "YES";
+            }
+        }
+
+        return "NO";
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int testCases = sc.nextInt();
+
+        while (testCases-- > 0) {
+            String first = sc.next();
+            String second = sc.next();
+
+            System.out.println(twoStrings(first, second));
+        }
+
+        sc.close();
+    }
+}
