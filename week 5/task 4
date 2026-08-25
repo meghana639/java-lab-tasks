@@ -1,0 +1,53 @@
+import java.util.*;
+
+public class task {
+
+    static int maxSubarraySumCircular(int[] nums) {
+        int totalSum = nums[0];
+
+        int currentMaximum = nums[0];
+        int maximumSum = nums[0];
+
+        int currentMinimum = nums[0];
+        int minimumSum = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            totalSum += nums[i];
+
+            currentMaximum =
+                    Math.max(nums[i], currentMaximum + nums[i]);
+
+            maximumSum =
+                    Math.max(maximumSum, currentMaximum);
+
+            currentMinimum =
+                    Math.min(nums[i], currentMinimum + nums[i]);
+
+            minimumSum =
+                    Math.min(minimumSum, currentMinimum);
+        }
+
+        // All numbers are negative
+        if (maximumSum < 0) {
+            return maximumSum;
+        }
+
+        int circularSum = totalSum - minimumSum;
+
+        return Math.max(maximumSum, circularSum);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int[] nums = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();
+        }
+
+        System.out.println(maxSubarraySumCircular(nums));
+        sc.close();
+    }
+}
