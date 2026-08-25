@@ -1,0 +1,25 @@
+import java.util.*;
+
+public class task {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            int first = sc.nextInt();
+            int second = sc.nextInt();
+
+            System.out.println(first / second);
+
+        } catch (InputMismatchException exception) {
+            System.out.println(
+                    "java.util.InputMismatchException"
+            );
+
+        } catch (ArithmeticException exception) {
+            System.out.println(exception);
+        }
+
+        sc.close();
+    }
+}
