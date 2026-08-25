@@ -1,0 +1,54 @@
+import java.util.*;
+
+public class task {
+
+    static ArrayList<Integer> findAnagrams(
+            String s, String pattern) {
+
+        ArrayList<Integer> result = new ArrayList<>();
+
+        if (pattern.length() > s.length()) {
+            return result;
+        }
+
+        int[] patternFrequency = new int[26];
+        int[] windowFrequency = new int[26];
+
+        for (int i = 0; i < pattern.length(); i++) {
+            patternFrequency[pattern.charAt(i) - 'a']++;
+            windowFrequency[s.charAt(i) - 'a']++;
+        }
+
+        if (Arrays.equals(patternFrequency, windowFrequency)) {
+            result.add(0);
+        }
+
+        for (int i = pattern.length(); i < s.length(); i++) {
+            windowFrequency[s.charAt(i) - 'a']++;
+
+            int removedIndex = i - pattern.length();
+            windowFrequency[s.charAt(removedIndex) - 'a']--;
+
+            if (Arrays.equals(patternFrequency, windowFrequency)) {
+                result.add(i - pattern.length() + 1);
+            }
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        String s = sc.nextLine();
+        String pattern = sc.nextLine();
+
+        ArrayList<Integer> answer = findAnagrams(s, pattern);
+
+        for (int index : answer) {
+            System.out.print(index + " ");
+        }
+
+        sc.close();
+    }
+}
