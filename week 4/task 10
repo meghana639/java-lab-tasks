@@ -1,0 +1,88 @@
+import java.util.*;
+
+public class task {
+
+    static void rotateMatrix(int[][] matrix, int rotations) {
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+        int layers = Math.min(rows, columns) / 2;
+
+        for (int layer = 0; layer < layers; layer++) {
+            ArrayList<Integer> values = new ArrayList<>();
+            ArrayList<int[]> positions = new ArrayList<>();
+
+            int top = layer;
+            int bottom = rows - layer - 1;
+            int left = layer;
+            int right = columns - layer - 1;
+
+            // Store the top row
+            for (int column = left; column <= right; column++) {
+                positions.add(new int[]{top, column});
+                values.add(matrix[top][column]);
+            }
+
+            // Store the right column
+            for (int row = top + 1; row <= bottom; row++) {
+                positions.add(new int[]{row, right});
+                values.add(matrix[row][right]);
+            }
+
+            // Store the bottom row
+            for (int column = right - 1; column >= left; column--) {
+                positions.add(new int[]{bottom, column});
+                values.add(matrix[bottom][column]);
+            }
+
+            // Store the left column
+            for (int row = bottom - 1; row > top; row--) {
+                positions.add(new int[]{row, left});
+                values.add(matrix[row][left]);
+            }
+
+            int length = values.size();
+            int effectiveRotations = rotations % length;
+
+            // Place the rotated values back into the matrix
+            for (int i = 0; i < length; i++) {
+                int sourceIndex = (i + effectiveRotations) % length;
+                int[] position = positions.get(i);
+
+                matrix[position[0]][position[1]] =
+                        values.get(sourceIndex);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int rows = sc.nextInt();
+        int columns = sc.nextInt();
+        int rotations = sc.nextInt();
+
+        int[][] matrix = new int[rows][columns];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                matrix[i][j] = sc.nextInt();
+            }
+        }
+
+        rotateMatrix(matrix, rotations);
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                System.out.print(matrix[i][j]);
+
+                if (j < columns - 1) {
+                    System.out.print(" ");
+                }
+            }
+
+            System.out.println();
+        }
+
+        sc.close();
+    }
+}
