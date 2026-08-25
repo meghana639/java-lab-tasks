@@ -1,0 +1,59 @@
+import java.util.*;
+
+public class task {
+
+    static boolean matches(String word, String pattern) {
+        if (word.length() != pattern.length()) {
+            return false;
+        }
+
+        HashMap<Character, Character> wordToPattern =
+                new HashMap<>();
+
+        HashMap<Character, Character> patternToWord =
+                new HashMap<>();
+
+        for (int i = 0; i < word.length(); i++) {
+            char wordCharacter = word.charAt(i);
+            char patternCharacter = pattern.charAt(i);
+
+            if (wordToPattern.containsKey(wordCharacter)
+                    && wordToPattern.get(wordCharacter)
+                    != patternCharacter) {
+                return false;
+            }
+
+            if (patternToWord.containsKey(patternCharacter)
+                    && patternToWord.get(patternCharacter)
+                    != wordCharacter) {
+                return false;
+            }
+
+            wordToPattern.put(wordCharacter, patternCharacter);
+            patternToWord.put(patternCharacter, wordCharacter);
+        }
+
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        String[] words = new String[n];
+
+        for (int i = 0; i < n; i++) {
+            words[i] = sc.next();
+        }
+
+        String pattern = sc.next();
+
+        for (String word : words) {
+            if (matches(word, pattern)) {
+                System.out.print(word + " ");
+            }
+        }
+
+        sc.close();
+    }
+}
