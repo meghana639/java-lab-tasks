@@ -1,0 +1,23 @@
+import java.util.*;
+
+public class task {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        HashSet<String> uniquePairs = new HashSet<>();
+
+        int numberOfPairs = sc.nextInt();
+
+        for (int i = 0; i < numberOfPairs; i++) {
+            String first = sc.next();
+            String second = sc.next();
+
+            String pair = first + " " + second;
+            uniquePairs.add(pair);
+
+            System.out.println(uniquePairs.size());
+        }
+
+        sc.close();
+    }
+}
