@@ -1,0 +1,75 @@
+import java.util.*;
+
+public class task {
+
+    static int longestPalindromeLength(String s) {
+        StringBuilder transformed = new StringBuilder("^");
+
+        for (int i = 0; i < s.length(); i++) {
+            transformed.append("#");
+            transformed.append(s.charAt(i));
+        }
+
+        transformed.append("#$");
+
+        char[] characters = transformed.toString().toCharArray();
+        int[] palindrome = new int[characters.length];
+
+        int center = 0;
+        int right = 0;
+        int maximumLength = 0;
+
+        for (int i = 1; i < characters.length - 1; i++) {
+            int mirror = 2 * center - i;
+
+            if (i < right) {
+                palindrome[i] =
+                        Math.min(right - i, palindrome[mirror]);
+            }
+
+            while (characters[i + palindrome[i] + 1]
+                    == characters[i - palindrome[i] - 1]) {
+                palindrome[i]++;
+            }
+
+            if (i + palindrome[i] > right) {
+                center = i;
+                right = i + palindrome[i];
+            }
+
+            maximumLength =
+                    Math.max(maximumLength, palindrome[i]);
+        }
+
+        return maximumLength;
+    }
+
+    static void circularPalindromes(String s) {
+        int n = s.length();
+        String doubled = s + s;
+
+        for (int rotation = 0; rotation < n; rotation++) {
+            String rotated =
+                    doubled.substring(rotation, rotation + n);
+
+            System.out.println(
+                    longestPalindromeLength(rotated)
+            );
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        String s = sc.next();
+
+        if (s.length() != n) {
+            System.out.println("Invalid string length");
+        } else {
+            circularPalindromes(s);
+        }
+
+        sc.close();
+    }
+}
