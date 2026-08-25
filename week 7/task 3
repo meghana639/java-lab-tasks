@@ -1,0 +1,95 @@
+import java.util.*;
+
+class CheckIn {
+    String station;
+    int time;
+
+    CheckIn(String station, int time) {
+        this.station = station;
+        this.time = time;
+    }
+}
+
+class RouteData {
+    int totalTime;
+    int numberOfTrips;
+
+    void addTrip(int travelTime) {
+        totalTime += travelTime;
+        numberOfTrips++;
+    }
+
+    double getAverage() {
+        return (double) totalTime / numberOfTrips;
+    }
+}
+
+class UndergroundSystem {
+    private HashMap<Integer, CheckIn> checkIns;
+    private HashMap<String, RouteData> routes;
+
+    UndergroundSystem() {
+        checkIns = new HashMap<>();
+        routes = new HashMap<>();
+    }
+
+    void checkIn(int id, String station, int time) {
+        checkIns.put(id, new CheckIn(station, time));
+    }
+
+    void checkOut(int id, String station, int time) {
+        CheckIn checkIn = checkIns.get(id);
+
+        String route = checkIn.station + "->" + station;
+        int travelTime = time - checkIn.time;
+
+        routes.putIfAbsent(route, new RouteData());
+        routes.get(route).addTrip(travelTime);
+
+        checkIns.remove(id);
+    }
+
+    double getAverageTime(String start, String end) {
+        String route = start + "->" + end;
+        return routes.get(route).getAverage();
+    }
+}
+
+public class task {
+
+    public static void main(String[] args) {
+        UndergroundSystem system = new UndergroundSystem();
+
+        system.checkIn(45, "Leyton", 3);
+        system.checkIn(32, "Paradise", 8);
+        system.checkIn(27, "Leyton", 10);
+
+        system.checkOut(45, "Waterloo", 15);
+        system.checkOut(27, "Waterloo", 20);
+        system.checkOut(32, "Cambridge", 22);
+
+        System.out.printf(
+                "%.5f%n",
+                system.getAverageTime("Paradise", "Cambridge")
+        );
+
+        System.out.printf(
+                "%.5f%n",
+                system.getAverageTime("Leyton", "Waterloo")
+        );
+
+        system.checkIn(10, "Leyton", 24);
+
+        System.out.printf(
+                "%.5f%n",
+                system.getAverageTime("Leyton", "Waterloo")
+        );
+
+        system.checkOut(10, "Waterloo", 38);
+
+        System.out.printf(
+                "%.5f%n",
+                system.getAverageTime("Leyton", "Waterloo")
+        );
+    }
+}
