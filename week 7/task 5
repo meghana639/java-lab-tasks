@@ -1,0 +1,42 @@
+import java.util.*;
+
+class MyHashSet {
+    private boolean[] values;
+
+    MyHashSet() {
+        values = new boolean[1000001];
+    }
+
+    void add(int key) {
+        values[key] = true;
+    }
+
+    void remove(int key) {
+        values[key] = false;
+    }
+
+    boolean contains(int key) {
+        return values[key];
+    }
+}
+
+public class task {
+
+    public static void main(String[] args) {
+        MyHashSet set = new MyHashSet();
+
+        set.add(1);
+        set.add(2);
+
+        System.out.println(set.contains(1));
+        System.out.println(set.contains(3));
+
+        set.add(2);
+
+        System.out.println(set.contains(2));
+
+        set.remove(2);
+
+        System.out.println(set.contains(2));
+    }
+}
