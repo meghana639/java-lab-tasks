@@ -1,0 +1,56 @@
+import java.util.*;
+
+public class task {
+
+    static void findMaximumSums(int[] arr) {
+        int currentSum = arr[0];
+        int maximumSubarray = arr[0];
+
+        int maximumElement = arr[0];
+        int positiveSum = 0;
+        boolean hasPositive = false;
+
+        for (int i = 0; i < arr.length; i++) {
+            if (i > 0) {
+                currentSum = Math.max(arr[i], currentSum + arr[i]);
+                maximumSubarray = Math.max(maximumSubarray, currentSum);
+            }
+
+            maximumElement = Math.max(maximumElement, arr[i]);
+
+            if (arr[i] > 0) {
+                positiveSum += arr[i];
+                hasPositive = true;
+            }
+        }
+
+        int maximumSubsequence;
+
+        if (hasPositive) {
+            maximumSubsequence = positiveSum;
+        } else {
+            maximumSubsequence = maximumElement;
+        }
+
+        System.out.println(maximumSubarray + " " + maximumSubsequence);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int testCases = sc.nextInt();
+
+        while (testCases-- > 0) {
+            int n = sc.nextInt();
+            int[] arr = new int[n];
+
+            for (int i = 0; i < n; i++) {
+                arr[i] = sc.nextInt();
+            }
+
+            findMaximumSums(arr);
+        }
+
+        sc.close();
+    }
+}
